@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+    <script src="js/zepto.min.js"></script>
+    <script src="js/jquery-1.7.2.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script src="js/swiper.min.js"></script>
+    <script src="js/iscroll.js"></script>
+    <script>
+        $(function () {
+            $.ajax({
+                url:'http://m.toutiao.com/list/?tag=__all__&ac=wap&count=20&format=json_raw&as=A1A5F839DFF34A8&cp=589F53E4EA38FE1&min_behot_time=1486828702',
+                dataType:'jsonp',
+                success: function(json){
+                    console.log(json);
+                    for(var i=0;i<json.data.length;i++){
+                        console.log(json.data[i].image_list.length);
+                        if(json.data[i].image_list.length!=0){
+                            console.log(json.data[i].image_list);
+                            var oB=$('<a href="javascript:;"><h3>'+json.data[i].title+'</h3><ul><li><img src="'+json.data[i].image_list[0].url+'" alt=""></li><li><img src="'+json.data[i].image_list[1].url+'" alt=""></li><li><img src="'+json.data[i].image_list[2].url+'" alt=""></li></ul><div><span>'+json.data[i].source+'</span><span>评论'+json.data[i].comment_count+'</span><span>'+json.data[i].datetime+'</span></div></a>');
+                            oB.appendTo('.content1');
+                        }else{
+                            if(json.data[i].image_url){
+                                var oB=$('<a style="width:100%;height:100%; display: block; overflow: hidden;" href="javascript:;"><div style="float: left;width: 60%;margin-top: 15px;"><h3>'+json.data[i].title+'</h3><span>'+json.data[i].source+'</span><span>评论</span><span>'+json.data[i].datetime+'</span></div><ul style="float: right; width: 40%; height: 90px;"><li style="width:100%;height:100%;"><img style="width:100%;height:100%;" src="'+json.data[i].image_url+'" alt=""></li></ul></a>');
+                                console.log(json.data[i].large_image_url);
+                            }else{
+                                var oB=$('<a style="width:100%;height:100%; display: block; overflow: hidden;" href="javascript:;"><div style="float: left;width: 60%;margin-top: 15px;"><h3>'+json.data[i].title+'</h3><span>'+json.data[i].source+'</span><span>评论</span><span>'+json.data[i].datetime+'</span></div><ul style="float: right; width: 40%; height: 90px;"><li style="width:100%;height:100%;"><img style="width:100%;height:100%;" src="'+json.data[i].large_image_url+'" alt=""></li></ul></a>');
+                                console.log(json.data[i].large_image_url);
+                            }
+                            oB.appendTo('.content1');
+                        }
+                    }
+                }
+            });
+            $('#T').click(function () {
+                $('#M').css('display','block')
+                $('#M1').css('display','block')
+            });
+            $('#M3').click(function () {
+                $('#M').css('display','none')
+                $('#M1').css('display','none')
+            });
+            $('#D').click(function () {
+                $('#h').css('display','block')
+                $('#h1').css('display','block')
+            });
+            $('#h').click(function () {
+                $('#h').css('display','none')
+                $('#h1').css('display','none')
+            });
+
+            $('#show li').live('click',function () {
+
+                $(this).appendTo($('#btn'))
+            });
+            $('#btn li').live('click',function () {
+                $(this).prependTo($('#show'))
+            });
+            var x=0;
+            var y=0;
+
+            $('#Tz').bind('mousedown',function(ev){
+                console.log(ev.clientX)
+                var disX=ev.clientX-$(this).offset().left;
+                function fnMove(ev){
+                    var l=ev.clientX-disX;
+                    $('#Tz').css({left:l+'px'});
+                    console.log(1)
+                }
+                function fnUp(){
+                    $(document).unbind('mousemove',fnMove);
+                    $(document).unbind('mouseup',fnUp);
+                }
+                $(document).bind('mousemove',fnMove)
+                $(document).bind('mouseup',fnUp)
+                return false;
+            })
+        })
+
+    </script>
+</head>
+<body>
+    <div class="box" data-role="page" id="page1">
+        <div class="zhan">
+            <div class="header">
+                <div class="l" id="T">
+                    <a href="javascript:;"></a>
+                </div>
+                <div class="m">
+                    <a href="javascript:;"></a>
+                    <a href="javascript:;"></a>
+                </div>
+                <div class="r">
+                    <a href="#page2" data-transition="flip"></a>
+                </div>
+            </div>
+            <div class="header2">
+                <ul id="Tz">
+                    <li>推荐</li>
+                    <li>阳光宽频</li>
+                    <li>热点</li>
+                    <li>社会</li>
+                    <li>娱乐</li>
+                    <li>军事</li>
+                </ul>
+                <div><a href="#page3" data-transition="flip"></a></div>
+            </div>
+        </div>
+        <div class="content">
+            <div></div>
+            <div class="content1" id="box2">
+                <!--<a href="javascript:;">-->
+                    <!--<div>-->
+                     <!--<h3>人老瑞显老，11个张昭你中了几个</h3>-->
+                         <!--<span>医有意思学</span><span>评论</span><span>6分钟前</span>-->
+                    <!--</div>-->
+                    <!--<ul>-->
+                        <!--<li>1</li>-->
+                    <!--</ul>-->
+                <!--</a>-->
+            </div>
+        </div>
+        <div class="ppin" id="M"></div>
+        <div class="pin" id="M1">
+
+            <div>
+                <b id="M3">x</b>
+                <i></i>
+                <p>已加载好您感兴趣的头条</p>
+                <span>立即打开</span>
+            </div>
+        </div>
+    </div>
+    <div class="box2" data-role="page" id="page2">
+        <div class="header">
+            <a href="#" data-icon="back" data-rel="back"><</a>
+            <p>搜索</p>
+        </div>
+
+        <div class="c">
+            <div class="c1">
+                <i id="D"></i>
+                <input type="text">
+            </div>
+            <ul class="h1" id="h1">
+                <li>
+                    <span>新闻</span>
+                </li>
+                <li>
+                    <span>神马</span>
+                </li>
+                <li>
+                    <span>百度</span>
+                 </li>
+            </ul>
+        </div>
+        <div class="h" id="h"></div>
+        <div class="content3">
+            <ul>
+                <li>伊朗军方试射导弹</li>
+                <li>浙江足浴店火灾</li>
+                <li>发微博骂警察被拘</li>
+                <li>杜特尔特终止和谈</li>
+                <li>阿富汗大雪天气</li>
+                <li>为抢红包撞破民房</li>
+                <li>老师买车学生众筹</li>
+                <li>韩机场引进裸检仪</li>
+                <li>释永信问题均查清</li>
+                <li>中游客南非遭枪击</li>
+            </ul>
+        </div>
+    </div>
+    <div class="box2" data-role="page" id="page3">
+        <div class="header">
+            <a href="#" data-icon="back" data-rel="back"><</a>
+            <p>频道管理</p>
+        </div>
+        <div class="content2">
+            <div class="content2T">
+                <h3>点击删除频道</h3>
+                <ul id="btn">
+                    <li>推荐</li>
+                    <li>热点</li>
+                    <li>社会</li>
+                    <li>科技</li>
+                    <li>汽车</li>
+                    <li>体育</li>
+                    <li>财经</li>
+                    <li>军事</li>
+                    <li>时尚</li>
+                    <li>游戏</li>
+                    <li>国际</li>
+                    <li>娱乐</li>
+                </ul>
+            </div>
+            <div class="content2T" >
+                <h3>点击添加以下频道</h3>
+                <ul id="show">
+                    <li>旅游</li>
+                    <li>历史</li>
+                    <li>探索</li>
+                    <li>美食</li>
+                    <li>育儿</li>
+                    <li>养生</li>
+                    <li>故事</li>
+                    <li>美文</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
